@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/21 18:44:57 by museker           #+#    #+#             */
+/*   Updated: 2023/08/21 19:09:06 by museker          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-map_info	*rectangle_control(map_info *map, char *map_name)
+t_map_info	*rectangle_control(t_map_info *map, char *map_name)
 {
-	int i;
-	int j;
-	int fd;
-	char *line;
+	int		i;
+	int		j;
+	int		fd;
+	char	*line;
 
 	i = 0;
 	fd = open(map_name, O_RDONLY);
 	if (fd == -1)
 		error_message("Dosya açılamadı!");
 	line = get_next_line(fd);
-	map->map = malloc(sizeof(char *)* (ft_strlen(line) + 1));
+	map->map = malloc(sizeof(char *) * (ft_strlen(line) + 1));
 	if (!map->map)
 		error_message("Bellek Hatası!");
 	while (line)
@@ -29,17 +41,16 @@ map_info	*rectangle_control(map_info *map, char *map_name)
 	return (map);
 }
 
-
-void	wall_control(map_info *map)
+void	wall_control(t_map_info *map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	while (++i < map->mapsize_x)
 	{
 		j = -1;
-		while(map->map[i][++j])
+		while (map->map[i][++j])
 		{
 			check_value(map, i, j);
 		}
@@ -48,14 +59,17 @@ void	wall_control(map_info *map)
 		error_message("Haritada hata var!");
 }
 
-void	check_value(map_info *map, int i, int j)
+void	check_value(t_map_info *map, int i, int j)
 {
-	if ((map->map[0][j] != '1' || map->map[i][0] != '1' || map->map[i][map->mapsize_y - 1] != '1' 
-			|| map->map[map->mapsize_x - 1][j] != '1') || (map->map[i][j] != '0' && map->map[i][j] != '1' 
-			&& map->map[i][j] != 'C' && map->map[i][j] != 'P' && map->map[i][j] != 'E' && map->map[i][j] != 'M'))
-			error_message("Haritada tanımlanamayan veriler var!");
+	if ((map->map[0][j] != '1' || map->map[i][0] != '1' 
+		|| map->map[i][map->mapsize_y - 1] != '1' 
+		|| map->map[map->mapsize_x - 1][j] != '1') 
+		|| (map->map[i][j] != '0' && map->map[i][j] != '1' 
+		&& map->map[i][j] != 'C' && map->map[i][j] != 'P' 
+		&& map->map[i][j] != 'E' && map->map[i][j] != 'M'))
+		error_message("Haritada tanımlanamayan veriler var!");
 	if (map->map[i][j] == 'E')
-		map->e +=  1;
+		map->e += 1;
 	else if (map->map[i][j] == 'C')
 		map->c += 1;
 	else if (map->map[i][j] == 'P')
@@ -71,12 +85,13 @@ void	check_value(map_info *map, int i, int j)
 		map->enemy_j = j;
 	}
 }
-void map_name_control(char *map_name)
+
+void	map_name_control(char *map_name)
 {
-	int i;
-	int j;
-	char *s;
-	int count;
+	int		i;
+	int		j;
+	char	*s;
+	int		count;
 
 	count = 0;
 	i = 0;
@@ -99,22 +114,21 @@ void map_name_control(char *map_name)
 		error_message(".ber dosya değil");
 }
 
-map_info *check_map(char *map_name)
+t_map_info	*check_map(char *map_name)
 {
-	map_info *map;
-	map = malloc(sizeof(map_info));
+	t_map_info	*map;
+
+	map = malloc(sizeof(t_map_info));
 	if (!map)
 		exit(1);
 	map->e = 0;
 	map->p = 0;
 	map->c = 0;
 	map->m = 0;
-
 	map_name_control(map_name);
 	rectangle_control(map, map_name);
 	if (map->mapsize_x > 26 || map->mapsize_y > 50)
 		error_message("harita boyutu fazla!");
 	wall_control(map);
-
 	return (map);
 }

@@ -1,108 +1,108 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_image.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/21 18:51:38 by museker           #+#    #+#             */
+/*   Updated: 2023/08/21 20:04:30 by museker          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-struct_control *images(struct_control *stc)
+t_struct_control	*images(t_struct_control *stc)
 {
-	stc->map_img = malloc(sizeof(map_images));
-	int pixel_x;
-	int pixel_y;
+	int	pixel_x;
+	int	pixel_y;
 
-	stc->map_img->empty = mlx_xpm_file_to_image(stc->mlx, "textures/empty.xpm", &pixel_x, &pixel_y);
-	stc->map_img->wall = mlx_xpm_file_to_image(stc->mlx, "textures/wall.xpm", &pixel_x, &pixel_y);
-	stc->map_img->coin = mlx_xpm_file_to_image(stc->mlx, "textures/coin.xpm", &pixel_x, &pixel_y);
-	stc->map_img->ch = mlx_xpm_file_to_image(stc->mlx, "textures/chR.xpm", &pixel_x, &pixel_y);
-	stc->map_img->portal = mlx_xpm_file_to_image(stc->mlx, "textures/portal.xpm", &pixel_x, &pixel_y);
-	stc->map_img->portalCh = mlx_xpm_file_to_image(stc->mlx, "textures/portalCh.xpm", &pixel_x, &pixel_y);
-	stc->map_img->enemy = mlx_xpm_file_to_image(stc->mlx, "textures/enemy.xpm", &pixel_x, &pixel_y);
+	stc->map_img = malloc(sizeof(t_map_images));
+	stc->map_img->empty = mlx_xpm_file_to_image(stc->mlx, "textures/empty.xpm", 
+			&pixel_x, &pixel_y);
+	stc->map_img->wall = mlx_xpm_file_to_image(stc->mlx, "textures/wall.xpm", 
+			&pixel_x, &pixel_y);
+	stc->map_img->coin = mlx_xpm_file_to_image(stc->mlx, "textures/coin.xpm", 
+			&pixel_x, &pixel_y);
+	stc->map_img->ch = mlx_xpm_file_to_image(stc->mlx, "textures/chR.xpm", 
+			&pixel_x, &pixel_y);
+	stc->map_img->portal = mlx_xpm_file_to_image(stc->mlx, 
+			"textures/portal.xpm", &pixel_x, &pixel_y);
+	stc->map_img->portal_ch = mlx_xpm_file_to_image(stc->mlx, 
+			"textures/portalCh.xpm", &pixel_x, &pixel_y);
+	stc->map_img->enemy = mlx_xpm_file_to_image(stc->mlx, "textures/enemy.xpm", 
+			&pixel_x, &pixel_y);
 	return (stc);
 }
-// portal sarı renk "#F7AF00"
-// portal mor renk "#A300CD"
 
-void put_image(struct_control *stc)
+void	put_image(t_struct_control *stc)
 {
-	int i;
-	int j;
-	int x;
-	int y;
-	int coin;
-	
+	int	i;
+	int	j;
+	int	coordinate[2];
+	int	coin;
+
 	i = -1;
-	x = 0;
-	y = 0;
+	coordinate[1] = 0;
 	coin = 0;
 	while (++i < stc->map->mapsize_x)
 	{
-		j = 0;
-		while(stc->map->map[i][j] != '\0')
+		j = -1;
+		coordinate[0] = 0; 
+		while (stc->map->map[i][++j] != '\0')
 		{
-			put_image2(stc, i, j++, x, y, &coin);
-			x += 50;
+			put_image2(stc, stc->map->map[i][j], coordinate, &coin);
+			put_image3(stc, i, j, coordinate);
+			coordinate[0] += 50;
 		}
-		x = 0; 
-		y += 50;
+		coordinate[1] += 50;
 	}
 	stc->ch->is_finish = 0;
 	if (coin == 0)
 		stc->ch->is_finish = 1;
 }
 
-void put_image2(struct_control *stc, int i, int j, int x, int y, int *coin)
+void	put_image2(t_struct_control *stc, char map_c, int *coordinate, 
+int *coin)
 {
-	if (stc->map->map[i][j] == '1')
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->wall, x, y);
-	else if (stc->map->map[i][j] == '0')
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->empty, x, y);
-	else if (stc->map->map[i][j] == 'C')
+	if (map_c == '1')
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->wall, 
+			coordinate[0], coordinate[1]);
+	else if (map_c == '0')
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->empty,
+			coordinate[0], coordinate[1]);
+	else if (map_c == 'C')
 	{
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->coin, x, y);
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->coin, 
+			coordinate[0], coordinate[1]);
 		*coin += 1;
 	}
-	else if (stc->map->map[i][j] == 'E')
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->portal, x, y);
-	else if (stc->map->map[i][j] == 'P' || stc->map->map[i][j] == 'X')
+	else if (map_c == 'E')
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->portal, 
+			coordinate[0], coordinate[1]);
+	else if (map_c == 'M')
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->enemy, 
+			coordinate[0], coordinate[1]);
+}
+
+void	put_image3(t_struct_control *stc, int i, int j, int *coordinate)
+{
+	if (stc->map->map[i][j] == 'P' || stc->map->map[i][j] == 'X')
 	{
 		if (stc->map->map[i][j] == 'X')
-			mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->portalCh, x, y);
+			mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->portal_ch,
+				coordinate[0], coordinate[1]);
 		else
-			mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->ch, x, y);
+			mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->ch, 
+				coordinate[0], coordinate[1]);
 		stc->ch->i = i;
 		stc->ch->j = j;
-		stc->ch->x = x;
-		stc->ch->y = y;
+		stc->ch->x = coordinate[0];
+		stc->ch->y = coordinate[1];
 	}
-	else if (stc->map->map[i][j] == 'M')
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->enemy, x, y);
-	x += 50;
-	j++;
 }
 
-int portal_and_check_img(struct_control *stc, int i, int j, int *step_count)
-{
-	if (stc->map->map[stc->ch->i][stc->ch->j] == 'X' && stc->map->map[stc->ch->i + i][stc->ch->j + j] != '1')
-	{
-		stc->map->map[stc->ch->i][stc->ch->j] = 'E';
-		stc->map->map[stc->ch->i + i][stc->ch->j + j] = 'P';
-		map_refresh(stc);
-		mucox18_step_count(stc,1);
-		return (31);
-	}
-	if (stc->map->map[stc->ch->i + i][stc->ch->j + j] == 'E')
-	{
-		stc->map->map[stc->ch->i][stc->ch->j] = '0';
-		stc->map->map[stc->ch->i + i][stc->ch->j + j] = 'X';
-		map_refresh(stc);
-		if (stc->ch->is_finish == 1)
-		{
-			ft_printf("Game Over!");
-			exit(0);
-		}
-		mucox18_step_count(stc,1);
-		return (31);
-	}
-	return (0);
-}
-
-void map_refresh(struct_control *stc)
+void	map_refresh(t_struct_control *stc)
 {
 	mlx_do_sync(stc->mlx);
 	mlx_clear_window(stc->mlx, stc->win);

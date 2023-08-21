@@ -6,18 +6,18 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 02:00:13 by mucakmak          #+#    #+#             */
-/*   Updated: 2023/08/18 16:30:54 by museker          ###   ########.fr       */
+/*   Updated: 2023/08/21 18:53:49 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../utils/so_long.h"
 
-void ft_putchar(char c)
+void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void	ft_putnbr(int nb) 
+void	ft_putnbr(int nb)
 {
 	if (nb >= 10) 
 	{
@@ -28,9 +28,9 @@ void	ft_putnbr(int nb)
 		ft_putchar(nb + 48);
 }
 
-void ft_putstr(char *str)
+void	ft_putstr(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -40,7 +40,7 @@ void ft_putstr(char *str)
 	}
 }
 
-void arg_check(va_list lst, char c)
+void	arg_check(va_list lst, char c)
 {
 	if (c == 'c')
 		ft_putchar(va_arg(lst, int));
@@ -50,10 +50,10 @@ void arg_check(va_list lst, char c)
 		ft_putstr(va_arg(lst, char *));
 }
 
-void ft_printf(const char *str, ...)
+void	ft_printf(const char *str, ...)
 {
-	int i;
-	va_list lst;
+	int		i;
+	va_list	lst;
 
 	i = 0;
 	va_start(lst, str);
