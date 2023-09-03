@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:36 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 19:33:46 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 15:30:26 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct map_values{
 	int		m;
 	int		enemy_i;
 	int		enemy_j;
+	int		e_x;
+	int		e_y;
 	int		ch_i;
 	int		ch_j;
 	char	**map;
@@ -70,6 +72,8 @@ typedef struct total_structs
 	t_pacman		*ch;
 	t_map_images	*map_img;
 	t_map_info		*map;
+	int				animate_count;
+	void			*animate;
 }	t_struct_control;
 
 // main.c
@@ -120,5 +124,10 @@ void				map_validation(t_map_info *map);
 char				*ft_itoa(int n);
 void				ghost_movement(t_struct_control *stc);
 void				mucox18_step_count(t_struct_control *stc, int i);
+void				exit_control(t_map_info *map);
+
+// animation
+void				coin_loop(t_struct_control *game);
+int					loop(t_struct_control *game);
 
 #endif

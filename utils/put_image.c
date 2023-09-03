@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:51:38 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 20:04:30 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 14:44:22 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_struct_control	*images(t_struct_control *stc)
 			&pixel_x, &pixel_y);
 	stc->map_img->ch = mlx_xpm_file_to_image(stc->mlx, "textures/chR.xpm", 
 			&pixel_x, &pixel_y);
-	stc->map_img->portal = mlx_xpm_file_to_image(stc->mlx, 
+	stc->animate = mlx_xpm_file_to_image(stc->mlx, 
 			"textures/portal.xpm", &pixel_x, &pixel_y);
 	stc->map_img->portal_ch = mlx_xpm_file_to_image(stc->mlx, 
 			"textures/portalCh.xpm", &pixel_x, &pixel_y);
@@ -78,8 +78,10 @@ int *coin)
 		*coin += 1;
 	}
 	else if (map_c == 'E')
-		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->portal, 
+	{
+		mlx_put_image_to_window(stc->mlx, stc->win, stc->animate, 
 			coordinate[0], coordinate[1]);
+	}
 	else if (map_c == 'M')
 		mlx_put_image_to_window(stc->mlx, stc->win, stc->map_img->enemy, 
 			coordinate[0], coordinate[1]);

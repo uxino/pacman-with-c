@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:50:42 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 19:15:41 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/02 16:03:49 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	is_reachable(t_map_info *map, char **clone_map)
 		{
 			if (clone_map[i][j] == 'C')
 				error_message("Map ulaşılabilir değil!");
+			if (clone_map[map->e_x][map->e_y] == '0')
+				error_message("exit error");
 			j++;
 		}
 		free(clone_map[i]);

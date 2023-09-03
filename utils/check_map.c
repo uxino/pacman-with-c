@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:44:57 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 19:09:06 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 15:51:45 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,11 @@ void	check_value(t_map_info *map, int i, int j)
 		&& map->map[i][j] != 'E' && map->map[i][j] != 'M'))
 		error_message("Haritada tanımlanamayan veriler var!");
 	if (map->map[i][j] == 'E')
+	{
 		map->e += 1;
+		map->e_x = i;
+		map->e_y = j;
+	}
 	else if (map->map[i][j] == 'C')
 		map->c += 1;
 	else if (map->map[i][j] == 'P')

@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:44:37 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 19:35:48 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 15:25:39 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	mucox18_step_count(t_struct_control *stc, int i)
 	char		*s;
 
 	s = ft_itoa(step_count);
-	mlx_string_put(stc->mlx, stc->win, 8, 15, 255, "Step Count: ");
-	mlx_string_put(stc->mlx, stc->win, 10, 30, 255, s);
+	mlx_string_put(stc->mlx, stc->win, 10, 15, 0xFFFFFFFF, "Step Count: ");
+	mlx_string_put(stc->mlx, stc->win, 90, 15, 0xFFFFFFFF, s);
 	if (i == 1)
 		step_count++;
 	free(s);
