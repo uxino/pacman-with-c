@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:54:36 by museker           #+#    #+#             */
-/*   Updated: 2023/09/03 15:30:26 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 16:24:02 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void				put_image2(t_struct_control *stc, char map_c,
 void				put_image3(t_struct_control *stc, int i, 
 						int j, int *coordinate);
 int					portal_and_check_img(t_struct_control *stc, int i, 
-						int j, int *step_count);
+						int j);
 void				map_refresh(t_struct_control *stc);
 
 // utils/charact	er_controller.c

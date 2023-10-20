@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:38:25 by museker           #+#    #+#             */
-/*   Updated: 2023/08/21 19:11:21 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 16:46:39 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	all(t_struct_control *stc, int i, int j, char *path)
 {
-	static int	step_count = 1;
 	int			px; 
 	int			py;
 
 	ghost_movement(stc);
-	if (portal_and_check_img(stc, i, j, &step_count) == 31)
+	if (portal_and_check_img(stc, i, j) == 31)
 	{
 		return (0);
 	}

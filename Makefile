@@ -1,6 +1,7 @@
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -L./mlx -lmlx -I -framework AppKit -framework OpenGL
+CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -L./mlx -lmlx -framework AppKit -framework OpenGL
 
 SRCS 	=	utils/so_long.c \
 			include/get_next_line/get_next_line_utils.c	\
@@ -25,18 +26,16 @@ RED = '\033[0;31m'
 
 all: ${NAME}
 
-$(PRNTF): 
-	@make -C ./printf
 
 $(MINI):
 	@make -C ./mlx
 
 $(NAME): $(MINI) $(OBJS) 
-	$(CC) ${CFLAGS} $(OBJS) -o $(NAME)
+	$(CC) ${CFLAGS} $(LDFLAGS) $(OBJS) -o $(NAME)
 	@echo "\033[1;96mStarted Program\033[1;96m"
 
 %.o: %.c
-	@${CC} -c $^ -o $@ -Wall -Werror -Wextra -g
+	@${CC} -c $^ -o $@ $(CFLAGS)
 
 clean:
 	@rm -rf ${OBJS}

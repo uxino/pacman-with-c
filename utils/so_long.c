@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:51:44 by museker           #+#    #+#             */
-/*   Updated: 2023/09/03 16:12:27 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 17:13:21 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,6 @@ int	key_code(int keycode, t_struct_control *stc)
 	return (0);
 }
 
-void	exit_control(t_map_info *map)
-{
-	if (map->map[map->e_x - 1][map->e_y] == '1' && 
-	map->map[map->e_x + 1][map->e_y] == '1' 
-	&& map->map[map->e_x][map->e_y + 1] == '1' && 
-	map->map[map->e_x][map->e_y - 1] == '1')
-		error_message("not a valid map");
-}
-
 int	close_game(void *param)
 {
 	param = NULL;
@@ -59,7 +50,6 @@ int	main(int argc, char *argv[])
 	stc->ch = malloc(sizeof(t_pacman));
 	stc->mlx = mlx_init();
 	stc->map = check_map(argv[1]);
-	exit_control(stc->map);
 	map_validation(stc->map);
 	stc->win = mlx_new_window(stc->mlx, stc->map->mapsize_y * 50,
 			stc->map->mapsize_x * 50, "so_long");

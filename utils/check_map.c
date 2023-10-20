@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:44:57 by museker           #+#    #+#             */
-/*   Updated: 2023/09/03 15:51:45 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/06 19:30:08 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_map_info	*rectangle_control(t_map_info *map, char *map_name)
 		error_message("Dosya açılamadı!");
 	line = get_next_line(fd);
 	map->map = malloc(sizeof(char *) * (ft_strlen(line) + 1));
-	if (!map->map)
-		error_message("Bellek Hatası!");
+	if (!map->map || !line)
+		error_message("error!");
 	while (line)
 	{
 		map->map[i++] = line;
@@ -53,6 +53,10 @@ void	wall_control(t_map_info *map)
 		while (map->map[i][++j])
 		{
 			check_value(map, i, j);
+			if ((map->map[i][j] != '0' && map->map[i][j] != '1' 
+				&& map->map[i][j] != 'C' && map->map[i][j] != 'P' 
+				&& map->map[i][j] != 'E' && map->map[i][j] != 'M'))
+				error_message("Haritada tanımlanamayan veriler var!");
 		}
 	}
 	if (map->p != 1 || map->e != 1 || map->c < 1 || map->m != 1)
@@ -63,10 +67,7 @@ void	check_value(t_map_info *map, int i, int j)
 {
 	if ((map->map[0][j] != '1' || map->map[i][0] != '1' 
 		|| map->map[i][map->mapsize_y - 1] != '1' 
-		|| map->map[map->mapsize_x - 1][j] != '1') 
-		|| (map->map[i][j] != '0' && map->map[i][j] != '1' 
-		&& map->map[i][j] != 'C' && map->map[i][j] != 'P' 
-		&& map->map[i][j] != 'E' && map->map[i][j] != 'M'))
+		|| map->map[map->mapsize_x - 1][j] != '1'))
 		error_message("Haritada tanımlanamayan veriler var!");
 	if (map->map[i][j] == 'E')
 	{

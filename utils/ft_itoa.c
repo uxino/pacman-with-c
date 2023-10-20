@@ -6,7 +6,7 @@
 /*   By: museker <museker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:47:45 by museker           #+#    #+#             */
-/*   Updated: 2023/09/03 16:12:49 by museker          ###   ########.fr       */
+/*   Updated: 2023/09/03 16:45:57 by museker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_itoa(int n)
 	return (str_num);
 }
 
-int	portal_and_check_img(t_struct_control *stc, int i, int j, int *step_count)
+int	portal_and_check_img(t_struct_control *stc, int i, int j)
 {
 	if (stc->map->map[stc->ch->i][stc->ch->j] == 'X' 
 		&& stc->map->map[stc->ch->i + i][stc->ch->j + j] != '1')
